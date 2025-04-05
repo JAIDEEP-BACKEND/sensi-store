@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SentiStore Dashboard</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f0f4f8;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 30px;
+    }
+    .count-box {
+      background: #fff;
+      padding: 20px;
+      margin: 10px auto;
+      width: 300px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      font-size: 24px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 SentiStore Dashboard</h1>
+  <div class="count-box" id="happy">😄 Happy: ...</div>
+  <div class="count-box" id="neutral">😐 Neutral: ...</div>
+  <div class="count-box" id="sad">😞 Sad: ...</div>
+  <div class="count-box" id="visits">👣 Visitors: ...</div>
+
+  <script>
+    // TODO: Replace with your Firebase project config
+    const firebaseConfig = {
+
+  apiKey: "AIzaSyDkAQj8oVAma_XCtTimDsyYQVtovVQ9SPQ",
+
+  authDomain: "sensistore1-ebbe1.firebaseapp.com",
+
+  projectId: "sensistore1-ebbe1",
+
+  storageBucket: "sensistore1-ebbe1.firebasestorage.app",
+
+  messagingSenderId: "307711152822",
+
+  appId: "1:307711152822:web:ec58a9b7042aee8a208c17",
+
+  measurementId: "G-LCFRDM7V16"
+
+};
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function updateCount(id, path) {
+      db.ref('sentiData/' + path).on('value', (snapshot) => {
+        document.getElementById(id).innerText = `${id === 'happy' ? '😄 Happy' : id === 'neutral' ? '😐 Neutral' : id === 'sad' ? '😞 Sad' : '👣 Visitors'}: ${snapshot.val()}`;
+      });
+    }
+
+    updateCount('happy', 'happy');
+    updateCount('neutral', 'neutral');
+    updateCount('sad', 'sad');
+    updateCount('visits', 'visits');
+  </script>
+</body>
+</html>
